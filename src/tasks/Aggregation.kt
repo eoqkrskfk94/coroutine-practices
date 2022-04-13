@@ -15,8 +15,10 @@ TODO: Write aggregation code.
  You can use 'Navigate | Test' menu action (note the shortcut) to navigate to the test.
 */
 fun List<User>.aggregate(): List<User> {
-    groupBy { it.login }
-        .map { (login, users) -> users.sumOf { it.contributions } }
-    return this
-    TODO()
+    return groupBy { it.login }
+        .map { (login, users) ->
+            User(login, users.sumOf { it.contributions })
+        }
+        .sortedByDescending { it.contributions }
+
 }
